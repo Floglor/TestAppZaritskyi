@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">TestAppZaritskyi</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tab_saved">Saved</string>
+    <string name="tab_search">Search</string>
+    <string name="etsy_api_key">t5qb5wa79es9m49n1rcu538a</string>
+</resources>
