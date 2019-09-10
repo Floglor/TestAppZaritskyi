@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.floggy.testappzaritskyi.MainApplication;
+import com.example.floggy.testappzaritskyi.StaticDataStorage;
 import com.example.floggy.testappzaritskyi.interfaces.ISearchResultsFragment;
 import com.example.floggy.testappzaritskyi.models.CategoryData;
 import com.example.floggy.testappzaritskyi.models.ProductData;
@@ -23,12 +24,18 @@ public class SearchResultPresenter {
     private CategoryData data;
     private Context context;
     final String TAG = "SearchResultPresenter";
+    public static final String ITEM_MESSAGE = "item";
 
     private ArrayList<ProductData> productDataArrayList;
+    private int lastPage = 0;
+    String category;
+
 
     public void attachView(ISearchResultsFragment view, String categoryName, ArrayList<ProductData> dataArrayList, Context context) {
         this.view = view;
+        if (dataArrayList != null)
         this.productDataArrayList = dataArrayList;
+        else this.productDataArrayList = StaticDataStorage.getLastSearchData();
         Log.i(TAG, "attachView: product data arrayList =" + productDataArrayList.toString());
         categoryName = TextWorker.decapitalizeText(categoryName);
         List<CategoryData> categories = ProductORM.getCategories(context);
@@ -41,10 +48,10 @@ public class SearchResultPresenter {
 
     }
 
-    private void loadProducts() {
+   /* private void loadProducts() {
         Log.i(TAG, "loadProducts: start");
         MainApplication.apiManager = new APIManager();
-        MainApplication.apiManager.getProduct(data.getName(), "2", new Callback<ResponseModelProducts>() {
+        MainApplication.apiManager.getProduct(data.getName(), 2, new Callback<ResponseModelProducts>() {
             @Override
             public void onResponse(Call<ResponseModelProducts> call, Response<ResponseModelProducts> response) {
                 ResponseModelProducts products = null;
@@ -63,7 +70,7 @@ public class SearchResultPresenter {
                 Log.e(TAG, "onFailure: fail");
             }
         });
-    }
+    } */
 
     void onBindProductRowAtPosition(ProductsRecyclerViewHolder holder, int position) {
         ProductData productData = productDataArrayList.get(position);
@@ -72,6 +79,8 @@ public class SearchResultPresenter {
             public void onItemClick(ProductData item) {
                 //TODO: add item view
                 view.showToast("placeholder for item click");
+                view.changeActivityToItemView(ITEM_MESSAGE, item);
+
             }
         });
     }

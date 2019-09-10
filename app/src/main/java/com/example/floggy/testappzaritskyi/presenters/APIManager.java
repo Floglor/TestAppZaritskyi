@@ -23,7 +23,7 @@ public class APIManager {
     private static APIManager apiManager;
 
 
-    APIManager() {
+    public APIManager() {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
@@ -55,11 +55,12 @@ public class APIManager {
         call.enqueue(callback);
     }
 
-    void getProduct(String category, String page, Callback<ResponseModelProducts> callback) {
+    public void getProduct(String category, int page, Callback<ResponseModelProducts> callback) {
         String productFields = "title,price,description";
         String state_active = "active";
         String include_img = "Images(url_75x75):1:0";
-        Call<ResponseModelProducts> call = service.getProduct(api_key, state_active, category, productFields, include_img, page);
+        String page_string = Integer.toString(page);
+        Call<ResponseModelProducts> call = service.getProduct(api_key, state_active, category, productFields, include_img, page_string);
         call.enqueue(callback);
     }
 

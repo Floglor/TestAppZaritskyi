@@ -8,16 +8,21 @@ import android.view.ViewGroup;
 import com.example.floggy.testappzaritskyi.R;
 import com.example.floggy.testappzaritskyi.models.ProductData;
 
+import java.util.List;
+
 public class ProductsRecyclerAdapter extends RecyclerView.Adapter<ProductsRecyclerViewHolder> {
 
-        private SearchResultPresenter presenter;
+    private List<ProductData> mProducts;
+
+    private SearchResultPresenter presenter;
 
     public interface OnItemClickListener {
         void onItemClick(ProductData item);
     }
 
-    public ProductsRecyclerAdapter(SearchResultPresenter presenter) {
+    public ProductsRecyclerAdapter(List<ProductData> mProducts, SearchResultPresenter presenter) {
         this.presenter = presenter;
+        this.mProducts = mProducts;
     }
 
     @NonNull
@@ -32,8 +37,20 @@ public class ProductsRecyclerAdapter extends RecyclerView.Adapter<ProductsRecycl
         presenter.onBindProductRowAtPosition(productsRecyclerViewHolder, i);
     }
 
+    public void add(ProductData data) {
+        mProducts.add(data);
+        notifyItemInserted(mProducts.size() - 1);
+    }
+
+    public void addAll(List<ProductData> dataList) {
+        if (dataList != null)
+            for (ProductData data : dataList) {
+                add(data);
+            }
+    }
+
     @Override
     public int getItemCount() {
-         return presenter.getProductsRowsCount();
+        return presenter.getProductsRowsCount();
     }
 }

@@ -59,7 +59,7 @@ public class ProductsRecyclerViewHolder extends RecyclerView.ViewHolder implemen
     public void bind(final ProductData item, final ProductsRecyclerAdapter.OnItemClickListener listener) {
         setImage(item.getImgURLData());
         setTitle(item.getTitle());
-        setDescription(item.getDescription());
+        setDescription(item.getPrice() + "$");
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 listener.onItemClick(item);

@@ -99,7 +99,7 @@ public class SearchFragmentPresenter {
         Log.i(TAG, "loadProductsFirstPage: start");
         MainApplication.apiManager = new APIManager();
         final String categoryName =  TextWorker.decapitalizeText(view.getCategory());
-        MainApplication.apiManager.getProduct(categoryName, "2", new Callback<ResponseModelProducts>() {
+        MainApplication.apiManager.getProduct(categoryName, 2, new Callback<ResponseModelProducts>() {
             @Override
             public void onResponse(Call<ResponseModelProducts> call, Response<ResponseModelProducts> response) {
                 ResponseModelProducts products = null;
